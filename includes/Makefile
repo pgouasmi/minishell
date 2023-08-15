@@ -6,7 +6,7 @@
 #    By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/10 11:32:54 by pgouasmi          #+#    #+#              #
-#    Updated: 2023/07/20 10:53:44 by pgouasmi         ###   ########.fr        #
+#    Updated: 2023/07/28 16:15:01 by pgouasmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -52,11 +52,17 @@ SRCSLIB = ./libft/ft_isalnum.c	\
 		./libft/ft_lstlast.c		\
 		./libft/ft_lstnew.c		\
 		./libft/ft_lstsize.c		\
+		./libft/ft_str_has_ws.c		\
 		./ft_printf/ft_printf.c		\
 		./ft_printf/ft_putchar_pf.c	\
 		./ft_printf/ft_putnbr_base.c	\
 		./ft_printf/ft_putnbr_base_p.c\
 		./ft_printf/ft_putstr_pf.c	\
+		./ft_dprintf/ft_dprintf.c		\
+		./ft_dprintf/ft_putchar_dpf.c	\
+		./ft_dprintf/ft_dputnbr_base.c	\
+		./ft_dprintf/ft_putnbr_base_dp.c\
+		./ft_dprintf/ft_putstr_dpf.c	\
 		./get_next_line/get_next_line_utils.c	\
 		./get_next_line/get_next_line.c	\
 
@@ -67,10 +73,10 @@ FLAG = -Wall -Wextra -Werror -ggdb3
 
 all:	$(NAME)
 
-$(NAME):	$(OBJS) $(HEADER) Makefile
+$(NAME):	$(OBJS) $(HEADER)
 			ar -rcs $(NAME) $(OBJS)
 
-%.o:	%.c $(HEADER) Makefile
+%.o:	%.c $(HEADER)
 			$(CC) $(FLAG) -I . -c $< -o $@
 
 clean:

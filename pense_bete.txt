@@ -1,0 +1,2 @@
+differents types d'elements cmd :
+| < << > >> cmd(opt) file args(str, echo) $(variables)

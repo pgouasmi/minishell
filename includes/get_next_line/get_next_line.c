@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/12/15 15:21:18 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/04/26 16:24:30 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:12:15 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,5 +115,7 @@ char	*get_next_line(int fd)
 	if (!line)
 		return (free(stash), stash = NULL, NULL);
 	stash = stash_ready(stash);
-	return (line);
+	return (free(stash), stash = NULL, line);
 }
+
+// "cat -e | ls -la \n anjd"

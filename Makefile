@@ -6,7 +6,7 @@
 #    By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 10:48:24 by pgouasmi          #+#    #+#              #
-#    Updated: 2023/07/20 12:50:11 by pgouasmi         ###   ########.fr        #
+#    Updated: 2023/08/09 18:04:19 by pgouasmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,6 @@ LIBFT_FILE	=	libft.a
 
 LIBFT_LIB	=	$(addprefix $(LIBFT_PATH), $(LIBFT_FILE))
 
-OBJS = ${SRCS:.c=.o}
-
 HEADER = minishell.h
 
 CC = cc
@@ -30,25 +28,24 @@ C_FILE		=	minishell.c					\
 				./utils/get_paths.c 		\
 				./utils/resources.c 		\
 				./utils/free.c 				\
+				./utils/sig_handler.c 		\
+				./utils/tokenizer.c         \
 				./commands/env_cmd.c 		\
 
 SRC			=	$(addprefix $(SRC_DIR),$(C_FILE))
 
 OBJ			=	$(SRC:.c=.o)
 
-.c.o:
-	$(CC) $(FLAG) -c $< -o $@
-
 all:	$(NAME)
 
 lib:	
 	@make -C $(LIBFT_PATH)
 
-%.o:	%.c $(HEADER) Makefile
+%.o:	%.c $(HEADER) 
 			$(CC) $(FLAG) -I . -c $< -o $@
 
-$(NAME): lib $(OBJ) $(OBJS)
-	$(CC) $(OBJ) $(OBJS) $(LIBFT_LIB) -o $(NAME)
+$(NAME): lib $(OBJ)
+	$(CC) $(OBJ) $(OBJS) $(LIBFT_LIB) -lreadline -o $(NAME)
 
 clean:
 	@make clean -C $(LIBFT_PATH)

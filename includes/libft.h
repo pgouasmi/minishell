@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 17:21:28 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/04/26 16:28:10 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/07 15:09:21 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ typedef struct s_list
 	int				content;
 	int				position;
 	int				index;
+	char			*cmd;
 	struct s_list	*next;
 }				t_list;
 
@@ -70,11 +71,20 @@ t_list	*ft_lstnew(int content);
 void	ft_lstadd_front(t_list **lst, t_list *new);
 int		ft_lstsize(t_list *lst);
 t_list	*ft_lstlast(t_list *lst);
+int		ft_str_has_ws(char *str);
+
 int		ft_printf(const char *s, ...);
 void	ft_putchar_pf(int c, size_t *char_count);
 void	ft_putstr_pf(const char *s, size_t *char_count);
 void	ft_putnbr_base(long long int n, const char *base, size_t *char_count);
 void	ft_putnbr_base_p(size_t n, const char *base, size_t *char_count);
+
+int		ft_dprintf(int fd, const char *s, ...);
+void	ft_putchar_dpf(int c, size_t *char_count, int fd);
+void	ft_putstr_dpf(const char *s, size_t *char_count, int fd);
+void	ft_dputnbr_base(long long int n, const char *base, size_t *char_count, int fd);
+void	ft_putnbr_base_dp(size_t n, const char *base, size_t *char_count, int fd);
+
 char	*get_next_line(int fd);
 char	*ft_strjoin_gnl(char *stash, char *buffer);
 char	*ft_strchr_gnl( char *s, int c);

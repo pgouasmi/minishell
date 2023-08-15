@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/11/15 13:18:46 by pgouasmi          #+#    #+#             */
-/*   Updated: 2022/11/30 11:59:02 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/07/26 15:47:07 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ static char	**fill_tab(size_t word_count, const char *s, char **tab, char c)
 			i++;
 		j++;
 	}
-	tab[j] = 0;
+	tab[j] = NULL;
 	return (tab);
 }
 
