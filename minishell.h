@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:52:08 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 14:36:36 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:05:38 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,5 +88,7 @@ void 	struct_init(t_mshell *shell);
 void	sig_handler(void);
 int		tokenizer(t_mshell *shell);
 void 	execution(t_mshell *shell, char **envp);
+void	free_arr(char **arr);
+void	ft_free_tokens(t_tokens	**head);
 
 #endif

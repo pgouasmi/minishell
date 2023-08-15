@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:48:14 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 15:35:41 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:09:40 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,19 +216,24 @@ void execution(t_mshell *shell, char **envp)
 				return (free_struct(shell), exit(3));
 			else
 			{
-				child = fork();
 				temp->cmd_arr = ft_split(temp->content, ' ');
+
+				//ft_printf("cmd_arr[0] = %s, content = %s\n\n", temp->cmd_arr, temp->content);
+
 				if (!temp->cmd_arr)
 					return (free_struct(shell), exit(1));
+				child = fork();
 				if (!child)
 				{
-					if (env_case(*shell, envp, temp->cmd_arr))
+					if (env_case(*shell, temp->cmd_arr, envp))
 						return (free_struct(shell), exit (4));
 				}
 				waitpid(child, NULL, 0);
+				if (temp->cmd_arr)
+					free_arr(temp->cmd_arr);
+				temp->cmd_arr = NULL;
 			}
 		}
 		temp = temp->next;
 	}
-	
 }

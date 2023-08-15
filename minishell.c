@@ -6,13 +6,13 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:35:22 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 14:55:55 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/15 16:30:24 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-	int g_signumm;
+	// int g_signumm;
 
 
 int madd_history(t_mshell *shell)
@@ -50,17 +50,20 @@ int main(int argc, char **argv, char **envp)
 	// pid_t childcmd;
 	char *line;
 	
-	g_signumm = 0;
+	// g_signumm = 0;
 	struct_init(&shell);
 
-	sig_handler();
+	// sig_handler();
 	if (get_paths(&shell, envp))
 		return (1);
 	ft_printf("path[0] = %s\n", shell.paths[0]);
 	while (1)
 	{
-		if (g_signumm == SIGINT)
+		// if (g_signumm == SIGINT)
+		{
 			ft_dprintf(0, "signum = %d\n", g_signumm);
+			// g_signumm = 0;
+		}
 		ft_printf("%s ", shell.join_user);
 		line = get_next_line(0);
 		if (!line)
