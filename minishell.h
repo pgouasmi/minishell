@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:52:08 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 16:05:38 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/16 10:35:42 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,8 +80,8 @@ void	print_arr(char **arr);
 void	print_lst(t_list *lst);
 void	free_struct(t_mshell *shell);
 void	free_arr(char **arr);
-int 	env_case(t_mshell shell, char **cmd_arr, char **envp);
-int		echo_case(char *prompt);
+int 	env_case(t_mshell shell, char **cmd_arr, char **envp, int fd);
+int		echo_case(char *prompt, int fd);
 int 	cd_case(t_mshell *shell);
 int 	redirect(t_mshell *shell);
 void 	struct_init(t_mshell *shell);

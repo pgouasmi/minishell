@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/08/09 17:58:25 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 14:53:26 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:38:10 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -200,15 +200,15 @@ int create_token(t_mshell *shell, int i, int j)
 		return (1);
 	if (str_is_ws(result))
 		return (2);
-	if (word_count(result) == 3)
-	{
-		if (create_token(shell, find_space_index(result, 2), j))
-			return (1);
-		if (create_token(shell, ft_strlen(result), find_space_index(result, 2)))
-			return (1);
-		free(result);
-		return (0);
-	}
+	// if (word_count(result) == 3 && (!strncmp(result, "echo", 4)))
+	// {
+	// 	if (create_token(shell, find_space_index(result, 2), j))
+	// 		return (1);
+	// 	if (create_token(shell, ft_strlen(result), find_space_index(result, 2)))
+	// 		return (1);
+	// 	free(result);
+	// 	return (0);
+	// }
 	new = malloc(sizeof(t_tokens));
 	if (!new)
 		return (free(str), free(result), 1);
@@ -230,6 +230,7 @@ int create_token(t_mshell *shell, int i, int j)
 		new->next = NULL;
 	}
 	new->content = ft_strdup(result);
+	// ft_printf("%s\n", result);
 	new->type = 0;
 	new->cmd_arr = NULL;
 	free(result);
@@ -243,7 +244,7 @@ int is_sep(char c)
 	size_t i;
 
 	i = 0;
-	while ("<>|\'\""[i])
+	while ("<>|"[i])
 	{
 		if ("<>|\'\""[i] == c)
 			return (1);

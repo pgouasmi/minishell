@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:35:22 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 16:30:24 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/16 10:57:26 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,24 +46,14 @@ int main(int argc, char **argv, char **envp)
 
 	(void)argc;
 	(void)argv;
+	char *str;
 
-	// pid_t childcmd;
+	str = NULL;
 	char *line;
-	
-	// g_signumm = 0;
-	struct_init(&shell);
-
-	// sig_handler();
 	if (get_paths(&shell, envp))
 		return (1);
-	ft_printf("path[0] = %s\n", shell.paths[0]);
 	while (1)
 	{
-		// if (g_signumm == SIGINT)
-		{
-			ft_dprintf(0, "signum = %d\n", g_signumm);
-			// g_signumm = 0;
-		}
 		ft_printf("%s ", shell.join_user);
 		line = get_next_line(0);
 		if (!line)
@@ -74,8 +64,51 @@ int main(int argc, char **argv, char **envp)
 			return (free_struct(&shell), 1);
 		tokenizer(&shell);
 		madd_history(&shell);
-
 		execution(&shell, envp);
+		free(shell.prompt);
+		shell.prompt = NULL;
+	}
+	free_struct(&shell);
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 		// shell.cmd = ft_split((const char *)shell.prompt, ' ');
 		// if (!shell.cmd)
 		// 	return (free_struct(&shell), 1);
@@ -95,11 +128,3 @@ int main(int argc, char **argv, char **envp)
 		// 			return (free_struct(&shell), 1);
 		// 	}
 		// }
-		free(shell.prompt);
-		shell.prompt = NULL;
-		// free_arr(shell.cmd);
-		// waitpid(childcmd, NULL, 0);
-	}
-	//waitpid(childcmd, NULL, 0);
-	free_struct(&shell);
-}

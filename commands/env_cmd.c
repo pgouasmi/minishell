@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:48:14 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 16:09:40 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/16 12:53:11 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ char *get_cmd_arguments(char *prompt)
 	size_t res_len;
 	size_t j;
 
-	while (prompt[i] != ' ')
+	while (prompt[i] && prompt[i] != ' ')
 		i++;
 	i++;
 	res_len = total_len - i;
@@ -83,7 +83,7 @@ int cd_case(t_mshell *shell)
 	return (free(str), free(temp), 0);
 }
 
-int echo_case(char *prompt)
+int echo_case(char *prompt, int fd)
 {
 	char *str;
 	char *temp;
@@ -97,7 +97,7 @@ int echo_case(char *prompt)
 	while (!are_quotes_closed(str))
 	{
 		i++;
-		ft_putstr_fd("> ", 1);
+		ft_putstr_fd("> ", fd);
 		char *line = get_next_line(1);
 		if (!line)
 			return (free(str), 1);
@@ -113,26 +113,29 @@ int echo_case(char *prompt)
 	result = ft_strtrim(str, "\"\n\'");
 	if (!result)
 		return (3);
-	ft_printf("%s\n", result);
+	ft_dprintf(fd, "%s\n", result);
 	free(str);
 	free(result);
 	return (0);
 }
-int env_case(t_mshell shell, char **cmd_arr, char **envp)
+
+int env_case(t_mshell shell, char **cmd_arr, char **envp, int fd)
 {
 	size_t j;
 	char *temp;
 
+	if (fd != 1)
+		dup2(fd, STDOUT_FILENO);
 	j = -1;
 	while (shell.paths[++j])
 	{
-		ft_printf("env_case : cmd_arr[0] = %s\n", cmd_arr[0]);
 		temp = ft_strjoin(shell.paths[j], cmd_arr[0]);
 		if (!temp)
 			return (2);
 		execve(temp, cmd_arr, envp);
 		free(temp);
 	}
+	close(fd);
 	return (ft_printf("sh: %d: %s: not found\n", shell.cmd_count, cmd_arr[0]), 1);
 }
 
@@ -172,44 +175,45 @@ char *get_cmd(char *str, size_t *i)
 	return (result);
 }
 
-int redirect(t_mshell *shell)
-{
-	char *cmd;
-	char *file;
-	size_t i;
-
-	ft_printf("got into redirect\n");
-
-	i = 0;
-	cmd = get_cmd(shell->prompt, &i);
-	if (!cmd)
-		return (1);
-
-	ft_printf("redirect : cmd = %s\n");
-
-	file = get_file(shell->prompt, i);
-	(void)file;
-
-	free(cmd);
-	return (0);
-}
-
 /*to do :
 - ENVP dans structure
-- lister les builtins */
+- lister les builtins
+- echo a refaire */
 void execution(t_mshell *shell, char **envp)
 {
 	t_tokens *temp;
-	pid_t	child;
+	pid_t child;
+	int fd;
 
 	temp = shell->tok_lst;
 	while (temp)
 	{
 		if (temp->type == CMD)
 		{
+			if (temp->next && (temp->next->type == APPEND || temp->next->type == RCHEVRON))
+			{
+				if (temp->next->next)
+				{
+					if (temp->next->type == RCHEVRON)
+						fd = open(temp->next->next->content, O_RDWR | O_CREAT, 0666);
+					else
+						fd = open(temp->next->next->content, O_RDWR | O_APPEND, 0666);
+					if (fd == -1)
+						return (free_struct(shell), exit(4));
+				}
+			}
+			else
+				fd = 1;
 			shell->cmd_count++;
 			if (!ft_strncmp((const char *)temp->content, "echo", 4))
-				echo_case(shell->prompt);
+			{
+				echo_case(temp->content, fd);
+				if (fd != 1)
+				{
+					while (temp && temp->type != CMD)
+						temp = temp->next;
+				}
+			}
 			else if (!ft_strncmp((const char *)temp->content, "cd", 2))
 				cd_case(shell);
 			else if (!ft_strncmp((const char *)temp->content, "exit", 4))
@@ -217,16 +221,13 @@ void execution(t_mshell *shell, char **envp)
 			else
 			{
 				temp->cmd_arr = ft_split(temp->content, ' ');
-
-				//ft_printf("cmd_arr[0] = %s, content = %s\n\n", temp->cmd_arr, temp->content);
-
 				if (!temp->cmd_arr)
 					return (free_struct(shell), exit(1));
 				child = fork();
 				if (!child)
 				{
-					if (env_case(*shell, temp->cmd_arr, envp))
-						return (free_struct(shell), exit (4));
+					if (env_case(*shell, temp->cmd_arr, envp, fd))
+						return (free_struct(shell), exit(4));
 				}
 				waitpid(child, NULL, 0);
 				if (temp->cmd_arr)
