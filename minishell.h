@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:52:08 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/17 11:57:33 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:38:44 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,8 +37,6 @@
 # include <readline/readline.h>
 # include <signal.h>
 # include "./includes/libft.h"
-
-// int g_signumm;
 
 typedef struct s_dlist
 {
@@ -72,7 +70,6 @@ typedef struct s_mshell
 	char		*current_loc;
 	size_t		cmd_count;
 	t_dlist		 history;
-	t_list		*hist;
 	t_tokens	*tok_lst;
 }		t_mshell;
 

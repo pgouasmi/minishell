@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:19:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/17 11:25:53 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:40:38 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,6 @@ int get_paths(t_mshell *shell, char **envp)
 
 	shell->cmd_count = 0;
 	path_index = find_index(envp, "PATH=");
-	shell->hist = NULL;
 	shell->tok_lst = NULL;
 	shell->cmd = NULL;
 	if (path_index == -1)

@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:35:22 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/17 12:59:35 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 14:40:18 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,29 +14,29 @@
 
 // int g_signumm;
 
-int madd_history(t_mshell *shell)
-{
-	t_list *new;
+// int madd_history(t_mshell *shell)
+// {
+// 	t_list *new;
 
-	new = malloc(sizeof(*new));
-	if (!shell->hist)
-	{
-		shell->hist = new;
-		shell->hist->cmd = ft_strdup((const char *)shell->prompt);
-		if (!shell->hist->cmd)
-			return (1);
-		shell->hist->next = NULL;
-	}
-	else
-	{
-		new->next = shell->hist;
-		shell->hist = new;
-		shell->hist->cmd = ft_strdup((const char *)shell->prompt);
-		if (!shell->hist->cmd)
-			return (1);
-	}
-	return (0);
-}
+// 	new = malloc(sizeof(*new));
+// 	if (!shell->hist)
+// 	{
+// 		shell->hist = new;
+// 		shell->hist->cmd = ft_strdup((const char *)shell->prompt);
+// 		if (!shell->hist->cmd)
+// 			return (1);
+// 		shell->hist->next = NULL;
+// 	}
+// 	else
+// 	{
+// 		new->next = shell->hist;
+// 		shell->hist = new;
+// 		shell->hist->cmd = ft_strdup((const char *)shell->prompt);
+// 		if (!shell->hist->cmd)
+// 			return (1);
+// 	}
+// 	return (0);
+// }
 
 size_t get_arr_size(char **arr)
 {
@@ -111,7 +111,7 @@ int main(int argc, char **argv, char **envp)
 		if (!shell.prompt)
 			return (free_struct(&shell), 1);
 		tokenizer(&shell);
-		madd_history(&shell);
+		// madd_history(&shell);
 		execution(&shell, envp);
 		free(shell.prompt);
 		shell.prompt = NULL;
