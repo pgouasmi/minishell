@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: pgouasmi <pgouasmi@student.42lyon.fr>      +#+  +:+       +#+         #
+#    By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/05/25 10:48:24 by pgouasmi          #+#    #+#              #
-#    Updated: 2023/08/09 18:04:19 by pgouasmi         ###   ########.fr        #
+#    Updated: 2023/08/17 14:53:21 by pgouasmi         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -45,7 +45,7 @@ lib:
 			$(CC) $(FLAG) -I . -c $< -o $@
 
 $(NAME): lib $(OBJ)
-	$(CC) $(OBJ) $(OBJS) $(LIBFT_LIB) -lreadline -o $(NAME)
+	$(CC) $(OBJ) $(LIBFT_LIB) -lreadline -o $(NAME)
 
 clean:
 	@make clean -C $(LIBFT_PATH)

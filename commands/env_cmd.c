@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:48:14 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/17 12:39:44 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 16:09:49 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -175,11 +175,10 @@ char *get_cmd(char *str, size_t *i)
 void	real_env_case(t_mshell *shell)
 {
 	size_t j;
-	size_t target;
 
+	ft_printf("\n\n\n\nGot into real env\n\n");
 	j = -1;
-	target = find_index(shell->menvp, "LS_COLORS=");
-	while (++j < target)
+	while (++j < shell->envp_size)
 		ft_printf("%s\n", shell->menvp[j]);
 }
 
