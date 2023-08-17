@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/05/25 10:52:08 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/16 10:35:42 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:57:33 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,8 @@ typedef struct s_mshell
 {
 	char		*prompt;
 	char		**cmd;
+	size_t		envp_size;
+	char		**menvp;
 	char		**paths;
 	char		**temp;
 	char 		*zero;
@@ -90,5 +92,6 @@ int		tokenizer(t_mshell *shell);
 void 	execution(t_mshell *shell, char **envp);
 void	free_arr(char **arr);
 void	ft_free_tokens(t_tokens	**head);
+int		find_index(char **envp, const char *str);
 
 #endif

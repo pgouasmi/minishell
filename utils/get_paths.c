@@ -6,13 +6,13 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:19:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/16 12:06:40 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:25:53 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-static int	find_index(char **envp, const char *str)
+ int	find_index(char **envp, const char *str)
 {
 	int	j;
 	size_t len;

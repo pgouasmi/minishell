@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:48:14 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/16 12:53:11 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:39:44 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,10 +25,7 @@ int are_quotes_closed(char *str)
 			while (str[j] != '\'' && str[j] != '\"' && j > 0)
 				j--;
 			if (str[i] != str[j] || j == i)
-			{
-				// ft_printf("str[%d] = %c, str[%d] = %c\n", i, str[i], j, str[j]);
 				return (0);
-			}
 		}
 		i++;
 	}
@@ -175,6 +172,18 @@ char *get_cmd(char *str, size_t *i)
 	return (result);
 }
 
+void	real_env_case(t_mshell *shell)
+{
+	size_t j;
+	size_t target;
+
+	j = -1;
+	target = find_index(shell->menvp, "LS_COLORS=");
+	while (++j < target)
+		ft_printf("%s\n", shell->menvp[j]);
+}
+
+
 /*to do :
 - ENVP dans structure
 - lister les builtins
@@ -218,6 +227,8 @@ void execution(t_mshell *shell, char **envp)
 				cd_case(shell);
 			else if (!ft_strncmp((const char *)temp->content, "exit", 4))
 				return (free_struct(shell), exit(3));
+			else if (!ft_strncmp((const char *)temp->content, "env", 3))
+				real_env_case(shell);
 			else
 			{
 				temp->cmd_arr = ft_split(temp->content, ' ');

@@ -6,14 +6,13 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 10:35:22 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/16 10:57:26 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 12:59:35 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "minishell.h"
 
-	// int g_signumm;
-
+// int g_signumm;
 
 int madd_history(t_mshell *shell)
 {
@@ -29,7 +28,7 @@ int madd_history(t_mshell *shell)
 		shell->hist->next = NULL;
 	}
 	else
-	{	
+	{
 		new->next = shell->hist;
 		shell->hist = new;
 		shell->hist->cmd = ft_strdup((const char *)shell->prompt);
@@ -39,6 +38,48 @@ int madd_history(t_mshell *shell)
 	return (0);
 }
 
+size_t get_arr_size(char **arr)
+{
+	size_t i;
+
+	if (!arr)
+		return (0);
+	i = 0;
+	while (arr[i])
+		i++;
+	return (i);
+}
+
+char **copy_tab(char **envp, size_t size)
+{
+	char **arr;
+	size_t j;
+
+	arr = malloc(sizeof(char *) * size + 1);
+	if (!arr)
+		return (NULL);
+	arr[size] = NULL;
+	j = 0;
+	while (j < size - 1)
+	{
+		arr[j] = ft_strdup(envp[j]);
+		if (!arr[j])
+			return (NULL);
+		j++;
+	}
+	return (arr);
+}
+
+void get_envp(t_mshell *shell, char **envp)
+{
+	shell->envp_size = get_arr_size(envp);
+	if (shell->envp_size == 0)
+		return (free_struct(shell), exit(1));
+	shell->menvp = copy_tab(envp, shell->envp_size + 1);
+	if (!shell->menvp)
+		return (free_struct(shell), exit(2));
+	ft_printf("\n\nenvp size = %d\nmenvp size = %d\n\n", get_arr_size(envp), get_arr_size(shell->menvp));
+}
 
 int main(int argc, char **argv, char **envp)
 {
@@ -50,8 +91,15 @@ int main(int argc, char **argv, char **envp)
 
 	str = NULL;
 	char *line;
-	if (get_paths(&shell, envp))
-		return (1);
+	if (envp)
+	{
+		get_envp(&shell, envp);
+		if (get_paths(&shell, shell.menvp))
+			return (1);
+	}
+	else
+		shell.paths = NULL;
+	print_arr(envp);
 	while (1)
 	{
 		ft_printf("%s ", shell.join_user);
@@ -71,60 +119,22 @@ int main(int argc, char **argv, char **envp)
 	free_struct(&shell);
 }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-		// shell.cmd = ft_split((const char *)shell.prompt, ' ');
-		// if (!shell.cmd)
-		// 	return (free_struct(&shell), 1);
-		// if (!ft_strncmp((const char *)shell.prompt, "exit", 4))
-		// 	return (free_struct(&shell), 2);
-		// else if (!ft_strncmp((const char *)shell.prompt, "echo", 4))
-		// 			echo_case(shell.prompt);
-		// else if (!ft_strncmp((const char *)shell.prompt, "cd", 2))
-		// 		cd_case(&shell);
-		// else
-		// {
-		// 	shell.cmd_count++;
-		// 	childcmd = fork();
-		// 	if (childcmd == 0)
-		// 	{
-		// 		if(env_case(shell, envp))
-		// 			return (free_struct(&shell), 1);
-		// 	}
-		// }
+// shell.cmd = ft_split((const char *)shell.prompt, ' ');
+// if (!shell.cmd)
+// 	return (free_struct(&shell), 1);
+// if (!ft_strncmp((const char *)shell.prompt, "exit", 4))
+// 	return (free_struct(&shell), 2);
+// else if (!ft_strncmp((const char *)shell.prompt, "echo", 4))
+// 			echo_case(shell.prompt);
+// else if (!ft_strncmp((const char *)shell.prompt, "cd", 2))
+// 		cd_case(&shell);
+// else
+// {
+// 	shell.cmd_count++;
+// 	childcmd = fork();
+// 	if (childcmd == 0)
+// 	{
+// 		if(env_case(shell, envp))
+// 			return (free_struct(&shell), 1);
+// 	}
+// }

@@ -6,7 +6,7 @@
 /*   By: pgouasmi <pgouasmi@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/20 12:40:51 by pgouasmi          #+#    #+#             */
-/*   Updated: 2023/08/15 14:38:45 by pgouasmi         ###   ########.fr       */
+/*   Updated: 2023/08/17 11:06:32 by pgouasmi         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -90,4 +90,6 @@ void	free_struct(t_mshell *shell)
 		ft_free_list(&shell->hist);
 	if (shell->tok_lst)
 		ft_free_tokens(&shell->tok_lst);
+	if (shell->menvp)
+		free_arr(shell->menvp);
 }
